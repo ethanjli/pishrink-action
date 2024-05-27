@@ -14,15 +14,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  strategy:
-    fail-fast: false
-    matrix:
-      destination:
-        - ''
-        - 'destination.img'
-        - 'destination.img.gz'
   build:
     name: Build test image
+    strategy:
+      fail-fast: false
+      matrix:
+        destination:
+          - ''
+          - 'destination.img'
+          - 'destination.img.gz'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

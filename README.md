@@ -1,6 +1,6 @@
 # PiShrink GitHub Action
 
-GitHub action to run [PiShrink](https://github.com/Drewsif/PiShrink) on a Raspberry Pi SD card image.
+GitHub action to process a Raspberry Pi SD card image using [PiShrink](https://github.com/Drewsif/PiShrink).
 
 ## Basic Usage Examples
 
