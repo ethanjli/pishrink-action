@@ -94,4 +94,4 @@ runs:
         fi
 
         echo "Running pishrink.sh $flags ${{ inputs.image }} $destination..."
-        ${{ github.action_path }}/pishrink.sh $flags ${{ inputs.image }} $destination
+        sudo ${{ github.action_path }}/pishrink.sh $flags ${{ inputs.image }} $destination
