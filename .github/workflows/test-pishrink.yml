@@ -20,9 +20,12 @@ jobs:
       fail-fast: false
       matrix:
         destination:
-          - ''
-          - 'destination.img'
-          - 'destination.img.gz'
+          - name: implicit
+            path: ''
+          - name: explicit
+            path: 'destination.img'
+          - name: explicit-gz
+            path: 'destination.img.gz'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -52,14 +55,14 @@ jobs:
         uses: ./
         with:
           image: cowsay-image.img
-          destination: ${{ matrix.destination }}
+          destination: ${{ matrix.destination.path }}
           compress: gzip
           compress-parallel: true
 
       - name: Upload image to Job Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: rpi-cowsay-arm64-latest
+          name: rpi-cowsay-${{ matrix.destination.name }}-arm64-latest
           path: ${{ steps.shrink-image.outputs.destination }}
           if-no-files-found: error
           retention-days: 0
