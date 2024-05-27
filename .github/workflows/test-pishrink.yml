@@ -14,8 +14,15 @@ on:
   workflow_dispatch:
 
 jobs:
+  strategy:
+    fail-fast: false
+    matrix:
+      destination:
+        - ''
+        - 'destination.img'
+        - 'destination.img.gz'
   build:
-    name: Build image
+    name: Build test image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -44,6 +51,7 @@ jobs:
         uses: ./
         with:
           image: cowsay-image.img
+          destination: ${{ matrix.destination }}
           compress: gzip
           compress-parallel: true
 
