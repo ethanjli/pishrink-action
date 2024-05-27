@@ -57,7 +57,7 @@ runs:
           gzip | gz)
             flags="$flags -z"
             if [ ! -z "${{ inputs.destination }}" ]; then
-              destination="$(sed 's~\.gz$~~' "${{ inputs.destination }}")"
+              destination="$(echo "${{ inputs.destination }}" | sed -e 's~\.gz$~~')"
               echo "destination=$destination.gz" >> $GITHUB_OUTPUT
             else
               echo "destination=${{ inputs.image }}.gz" >> $GITHUB_OUTPUT
@@ -66,7 +66,7 @@ runs:
           xz)
             flags="$flags -Z"
             if [ ! -z "${{ inputs.destination }}" ]; then
-              destination="$(sed 's~\.xz$~~' "${{ inputs.destination }}")"
+              destination="$(echo "${{ inputs.destination }}" | sed -e 's~\.xz$~~')"
               echo "destination=$destination.xz" >> $GITHUB_OUTPUT
             else
               echo "destination=${{ inputs.image }}.xz" >> $GITHUB_OUTPUT
