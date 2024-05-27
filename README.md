@@ -16,7 +16,7 @@ downloading a base image, expanding it, and modifying its filesystem (e.g. with
   run: wget http://some-website.com/large-rpi-sd-card-image.img
 
 - name: Shrink image
-  uses: ethanjli/pishrink-action@v0.1.0
+  uses: ethanjli/pishrink-action@v0.1.1
   with:
     image: large-rpi-sd-card-image.img
     compress: gzip
@@ -38,7 +38,7 @@ downloading a base image, expanding it, and modifying its filesystem (e.g. with
   run: wget http://some-website.com/large-rpi-sd-card-image.img
 
 - name: Shrink image
-  uses: ethanjli/pishrink-action@v0.1.0
+  uses: ethanjli/pishrink-action@v0.1.1
   with:
     image: large-rpi-sd-card-image.img
     compress: xz
@@ -60,7 +60,7 @@ downloading a base image, expanding it, and modifying its filesystem (e.g. with
   run: wget http://some-website.com/large-rpi-sd-card-image.img
 
 - name: Shrink image
-  uses: ethanjli/pishrink-action@v0.1.0
+  uses: ethanjli/pishrink-action@v0.1.1
   with:
     image: large-rpi-sd-card-image.img
     destination: result.img.gz
@@ -85,7 +85,7 @@ downloading a base image, expanding it, and modifying its filesystem (e.g. with
 
 - name: Shrink image
   id: shrink-image
-  uses: ethanjli/pishrink-action@v0.1.0
+  uses: ethanjli/pishrink-action@v0.1.1
   with:
     image: large-rpi-sd-card-image.img
     compress: gzip
@@ -135,7 +135,7 @@ jobs:
           pifile: cowsay.Pifile
 
       - name: Shrink the image
-        uses: ethanjli/pishrink-action@v0.1.0
+        uses: ethanjli/pishrink-action@v0.1.1
         with:
           image: cowsay-image.img
           compress: gzip
