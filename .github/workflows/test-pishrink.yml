@@ -15,7 +15,17 @@ on:
 
 jobs:
   build:
-    name: Build image
+    name: Build test image
+    strategy:
+      fail-fast: false
+      matrix:
+        destination:
+          - name: implicit
+            path: ''
+          - name: explicit
+            path: 'destination.img'
+          - name: explicit-gz
+            path: 'destination.img.gz'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -41,17 +51,19 @@ jobs:
           pifile: cowsay.Pifile
 
       - name: Shrink the image
+        id: shrink-image
         uses: ./
         with:
           image: cowsay-image.img
+          destination: ${{ matrix.destination.path }}
           compress: gzip
           compress-parallel: true
 
       - name: Upload image to Job Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: rpi-cowsay-arm64-latest
-          path: cowsay-image.img.gz
+          name: rpi-cowsay-${{ matrix.destination.name }}-arm64-latest
+          path: ${{ steps.shrink-image.outputs.destination }}
           if-no-files-found: error
           retention-days: 0
           compression-level: 0
