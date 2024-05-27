@@ -48,6 +48,7 @@ jobs:
           pifile: cowsay.Pifile
 
       - name: Shrink the image
+        id: shrink-image
         uses: ./
         with:
           image: cowsay-image.img
@@ -59,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rpi-cowsay-arm64-latest
-          path: cowsay-image.img.gz
+          path: ${{ steps.shrink-image.outputs.destination }}
           if-no-files-found: error
           retention-days: 0
           compression-level: 0
