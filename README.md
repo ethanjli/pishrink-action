@@ -127,7 +127,7 @@ jobs:
             # Install and test out cowsay:
             RUN apt-get update
             RUN apt-get install -y cowsay
-            RUN cowsay "I'm running in a chroot!"
+            RUN /usr/games/cowsay "I'm running in a chroot!"
 
       - name: Build the image
         uses: Nature40/pimod@master
