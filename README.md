@@ -112,10 +112,13 @@ jobs:
     name: Build image
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Make a Pifile for Pimod
         uses: 1arp/create-a-file-action@0.4.5
         with:
-          path: cowsay.Pifile
+          file: cowsay.Pifile
           content: |
             FROM https://downloads.raspberrypi.com/raspios_lite_arm64/images/raspios_lite_arm64-2024-03-15/2024-03-15-raspios-bookworm-arm64-lite.img.xz
             TO cowsay-image.img
