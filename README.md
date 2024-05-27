@@ -11,7 +11,7 @@ downloading a base image, expanding it, and modifying its filesystem (e.g. with
 
 ### Shrink with gzip
 
-```
+```yaml
 - name: Download an example image
   run: wget http://some-website.com/large-rpi-sd-card-image.img
 
@@ -33,7 +33,7 @@ downloading a base image, expanding it, and modifying its filesystem (e.g. with
 
 ### Shrink with xz
 
-```
+```yaml
 - name: Download an example image
   run: wget http://some-website.com/large-rpi-sd-card-image.img
 
@@ -55,7 +55,7 @@ downloading a base image, expanding it, and modifying its filesystem (e.g. with
 
 ### Separate destination
 
-```
+```yaml
 - name: Download an example image
   run: wget http://some-website.com/large-rpi-sd-card-image.img
 
@@ -79,7 +79,7 @@ downloading a base image, expanding it, and modifying its filesystem (e.g. with
 
 ### Automatically-determined destination
 
-```
+```yaml
 - name: Download an example image
   run: wget http://some-website.com/large-rpi-sd-card-image.img
 
@@ -106,7 +106,7 @@ downloading a base image, expanding it, and modifying its filesystem (e.g. with
 This example job uses Pimod to generate a custom image, and then shrinks it before uploading as an
 artifact on the GitHub Actions job:
 
-```
+```yaml
 jobs:
   build:
     name: Build image
