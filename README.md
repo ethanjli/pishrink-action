@@ -144,7 +144,7 @@ jobs:
       - name: Upload image to Job Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: cowsay-image
+          name: rpi-cowsay-arm64-latest
           path: cowsay-image.img.gz
           if-no-files-found: error
           retention-days: 0
