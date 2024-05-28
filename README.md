@@ -2,6 +2,8 @@
 
 GitHub action to process a Raspberry Pi SD card image using [PiShrink](https://github.com/Drewsif/PiShrink).
 
+This action is the inverse of [ethanjli/pigrow-action](https://github.com/ethanjli/pigrow-action).
+
 ## Basic Usage Examples
 
 Note: in the below example sequences of GitHub Actions job steps, the URL of the downloaded image
@@ -28,6 +30,7 @@ downloading a base image, expanding it, and modifying its filesystem (e.g. with
     name: shrunken-image
     path: large-rpi-sd-card-image.img
     if-no-files-found: error
+    compression-level: 0
     overwrite: true
 ```
 
@@ -50,6 +53,7 @@ downloading a base image, expanding it, and modifying its filesystem (e.g. with
     name: shrunken-image
     path: large-rpi-sd-card-image.img
     if-no-files-found: error
+    compression-level: 0
     overwrite: true
 ```
 

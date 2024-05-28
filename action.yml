@@ -53,7 +53,7 @@ runs:
       run: |
         flags=""
         destination=""
-        case ${{ inputs.compress }} in
+        case "${{ inputs.compress }}" in
           gzip | gz)
             flags="$flags -z"
             if [ ! -z "${{ inputs.destination }}" ]; then
