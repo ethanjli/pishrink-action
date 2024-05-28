@@ -50,48 +50,56 @@ runs:
   steps:
     - id: run-pishrink
       shell: bash
+      env:
+        INPUT_IMAGE: ${{ inputs.image }}
+        INPUT_DESTINATION: ${{ inputs.destination }}
+        INPUT_COMPRESS: ${{ inputs.compress }}
+        INPUT_COMPRESS_PARALLEL: ${{ inputs.compress-parallel }}
+        INPUT_PREVENT_EXPANSION: ${{ inputs.prevent-expansion }}
+        INPUT_ADVANCED_FS_REPAIR: ${{ inputs.advanced-fs-repair }}
+        INPUT_VERBOSE: ${{ inputs.verbose }}
       run: |
         flags=""
         destination=""
-        case "${{ inputs.compress }}" in
+        case "$INPUT_COMPRESS" in
           gzip | gz)
             flags="$flags -z"
-            if [ ! -z "${{ inputs.destination }}" ]; then
-              destination="$(echo "${{ inputs.destination }}" | sed -e 's~\.gz$~~')"
+            if [ ! -z "$INPUT_DESTINATION" ]; then
+              destination="$(echo "$INPUT_DESTINATION" | sed -e 's~\.gz$~~')"
               echo "destination=$destination.gz" >> $GITHUB_OUTPUT
             else
-              echo "destination=${{ inputs.image }}.gz" >> $GITHUB_OUTPUT
+              echo "destination=$INPUT_IMAGE.gz" >> $GITHUB_OUTPUT
             fi
             ;;
           xz)
             flags="$flags -Z"
-            if [ ! -z "${{ inputs.destination }}" ]; then
-              destination="$(echo "${{ inputs.destination }}" | sed -e 's~\.xz$~~')"
+            if [ ! -z "$INPUT_DESTINATION" ]; then
+              destination="$(echo "$INPUT_DESTINATION" | sed -e 's~\.xz$~~')"
               echo "destination=$destination.xz" >> $GITHUB_OUTPUT
             else
-              echo "destination=${{ inputs.image }}.xz" >> $GITHUB_OUTPUT
+              echo "destination=$INPUT_IMAGE.xz" >> $GITHUB_OUTPUT
             fi
             ;;
           none | "false" | "")
-            echo "destination=${{ inputs.destination || inputs.image }}" >> $GITHUB_OUTPUT
+            echo "destination=$INPUT_DESTINATION" >> $GITHUB_OUTPUT
             ;;
           *)
-            echo "Error: unrecognized compression type: ${{ inputs.compress }}"
+            echo "Error: unrecognized compression type: $INPUT_COMPRESS"
             exit 1
             ;;
         esac
-        if [ ${{ inputs.compress-parallel }} == "true" ]; then
+        if [ "$INPUT_COMPRESS_PARALLEL" == "true" ]; then
           flags="$flags -a"
         fi
-        if [ ${{ inputs.prevent-expansion }} == "true" ]; then
+        if [ "$INPUT_PREVENT_EXPANSION" == "true" ]; then
           flags="$flags -s"
         fi
-        if [ ${{ inputs.advanced-fs-repair }} == "true" ]; then
+        if [ "$INPUT_ADVANCED_FS_REPAIR" == "true" ]; then
           flags="$flags -r"
         fi
-        if [ ${{ inputs.verbose }} == "true" ]; then
+        if [ "$INPUT_VERBOSE" == "true" ]; then
           flags="$flags -v"
         fi
 
-        echo "Running pishrink.sh $flags ${{ inputs.image }} $destination..."
-        sudo ${{ github.action_path }}/pishrink.sh $flags ${{ inputs.image }} $destination
+        echo "Running pishrink.sh $flags \"$INPUT_IMAGE\" \"$destination\"..."
+        sudo ${{ github.action_path }}/pishrink.sh $flags "$INPUT_IMAGE" "$destination"

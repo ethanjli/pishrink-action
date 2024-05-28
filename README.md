@@ -1,6 +1,6 @@
 # PiShrink GitHub Action
 
-GitHub action to process a Raspberry Pi SD card image using [PiShrink](https://github.com/Drewsif/PiShrink).
+GitHub action to shrink & compress a Raspberry Pi SD card image using [PiShrink](https://github.com/Drewsif/PiShrink).
 
 This action is the inverse of [ethanjli/pigrow-action](https://github.com/ethanjli/pigrow-action).
 
