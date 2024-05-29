@@ -156,6 +156,63 @@ jobs:
           overwrite: true
 ```
 
+## PiNspawn Usage Example
+
+This example job uses [ethanjli/pinspawn-action](https://github.com/ethanjli/pinspawn-action) to
+generate a custom image, and then shrinks it before uploading as an artifact on the GitHub Actions
+job:
+
+```yaml
+jobs:
+  build:
+    name: Build image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download a base image
+        run: wget https://downloads.raspberrypi.com/raspios_lite_arm64/images/raspios_lite_arm64-2024-03-15/2024-03-15-raspios-bookworm-arm64-lite.img.xz
+
+      - name: Grow the image
+        uses: ethanjli/pigrow-action@v0.1.1
+        with:
+          image: 2024-03-15-raspios-bookworm-arm64-lite.img.xz
+          destination: cowsay-image.img
+          mode: to
+          size: 8G
+
+      - name: Build the image
+        uses: ethanjli/pinspawn-action@v0.1.1
+        with:
+          image: cowsay-image.img
+          run: |
+            apt-get update
+            apt-get install -y cowsay
+            /usr/games/cowsay 'I am running in a light-weight namespace container!'
+
+      - name: Shrink the image
+        uses: ethanjli/pishrink-action@v0.1.1
+        with:
+          image: cowsay-image.img
+          compress: gzip
+          compress-parallel: true
+
+      - name: Upload the image to Job Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: rpi-cowsay-arm64-latest
+          path: cowsay-image.img.gz
+          if-no-files-found: error
+          retention-days: 0
+          compression-level: 0
+          overwrite: true
+```
+
+You can also replace `ethanjli/pinspawn-action@v0.1.1` with `ethanjli/piqemu-action@v0.1.0` to run
+commands in a booted QEMU VM, if you need to run commands which interact with the Docker daemon in
+your custom image.
+
 ## Usage Options
 
 Inputs:
