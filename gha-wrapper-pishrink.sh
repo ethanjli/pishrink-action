@@ -45,4 +45,5 @@ if [ "$INPUT_VERBOSE" == "true" ]; then
 fi
 
 echo "Running pishrink.sh $flags \"$INPUT_IMAGE\" \"$destination\"..."
-sudo "$action_root/pishrink.sh" $flags "$INPUT_IMAGE" "$destination"
+sudo --preserve-env=PISHRINK_GZIP --preserve-env=PISHRINK_XZ \
+  "$action_root/pishrink.sh" $flags "$INPUT_IMAGE" "$destination"
